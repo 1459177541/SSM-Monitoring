@@ -1,0 +1,26 @@
+/* CSS Document */
+#body{
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #72D1E9;
+}
+#main{
+    color: white;
+    width: 800px;
+    height: 300px;
+    margin: 0 auto;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 280px;
+    text-align: center;
+}
+#main h1{
+    font-size: 120px;
+}
+.button{
+    font-size: 50px;
+}

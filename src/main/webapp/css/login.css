@@ -1,0 +1,36 @@
+/* CSS Document */
+#body{
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #72D1E9;
+}
+#main{
+    color: white;
+    width: 500px;
+    height: 600px;
+    margin: 0 auto;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 160px;
+    text-align: center;
+    border: white 3px solid;
+    border-radius: 15px;
+}
+#main h1{
+    font-size: 80px;
+    margin: 20px;
+}
+#err{
+    bottom: 0;
+    position: absolute;
+    display: block;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    color: red;
+}

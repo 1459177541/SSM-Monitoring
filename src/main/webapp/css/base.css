@@ -1,0 +1,52 @@
+/* CSS Document */
+*{
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+}
+.button{
+    background: white;
+    width: 200px;
+    margin: 30px auto;
+    color: #72D1E9;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    padding: 5px 35px;
+}
+.button:hover{
+    background: rgba(255, 255, 255, 0.8);
+}
+.input{
+    display: block;
+    width: 90%;
+    font-size: 30px;
+    margin: 50px auto 30px;
+    border: white 3px solid;
+    border-radius: 15px;
+}
+.input font{
+    display: inline-block;
+    width: 30%;
+    background: white;
+    color: #72D1E9;
+    font-weight: bold;
+    text-align: center;
+}
+.input input{
+    display: inline-block;
+    right: 0;
+    border: none;
+    font-size: 25px;
+    margin: 0;
+    padding: 0 1%;
+    height: 120%;
+    width: 68%;
+    background: #72D1E9;
+    color: white;
+}
+.input input:focus{
+    outline: none;
+}
