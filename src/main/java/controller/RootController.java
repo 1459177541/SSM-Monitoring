@@ -2,6 +2,8 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RootController {
@@ -19,6 +21,11 @@ public class RootController {
     @GetMapping({"/sign_up","sign_in.html"})
     public String signUp(){
         return "sign_up_page";
+    }
+
+    @GetMapping({"/err"})
+    public String err(@RequestParam("err") int err){
+        return "err_page";
     }
 
 }

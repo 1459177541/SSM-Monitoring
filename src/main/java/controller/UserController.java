@@ -10,15 +10,15 @@ import service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static controller.inteceptor.UserInterceptor.UUID;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
 
-    static ConcurrentHashMap<Integer, User> UUID = new ConcurrentHashMap<>();
     static ThreadLocalRandom random = ThreadLocalRandom.current();
 
     @Autowired
