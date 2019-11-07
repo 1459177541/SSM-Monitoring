@@ -23,6 +23,11 @@ public class RootController {
         return "sign_up_page";
     }
 
+    @GetMapping({"/console","/console.html"})
+    public String console(){
+        return "console_page";
+    }
+
     @GetMapping({"/err"})
     public String err(@RequestParam("err") int err){
         return "err_page";

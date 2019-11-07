@@ -47,6 +47,15 @@ public class User implements Serializable {
         return this;
     }
 
+    public List<UserGroup> getUserGroups() {
+        return userGroups;
+    }
+
+    public User setUserGroups(List<UserGroup> userGroups) {
+        this.userGroups = userGroups;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

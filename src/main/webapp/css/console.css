@@ -1,0 +1,71 @@
+/* CSS Document */
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+li{
+    list-style: none;
+}
+/*
+#menu{
+    position: fixed;
+    z-index: 999;
+    background: rgba(0,0,0,0.3);
+    padding: 5px;
+    border-radius: 5px;
+    left: 15px;
+    top:30%;
+}
+#menu li{
+    font-size: 25px;
+    margin: 5px;
+    padding: 3px 12px;
+    border-radius: 5px;
+}
+#menu li:hover{
+    background: rgba(0,0,0,0.7);
+}
+#menu .active{
+    background: rgba(0,0,0,0.7);
+}
+*/
+#menu{
+    text-align: center;
+    position: fixed;
+    z-index: 999;
+    background: rgba(0,0,0,0.8);
+    width: 40px;
+    height: 100%;
+    transition: all .5s ease;
+    padding: 20px 0;
+    color: white;
+}
+#menu:hover{
+    width: 120px;
+    background: #002;
+}
+#menu li{
+    font-size: 30px;
+    overflow: hidden;
+    height: 40px;
+    margin: 5px 0;
+}
+#menu li:hover{
+    background: #3A50D1;
+}
+#menu .active{
+    background: #3A50D1;
+}
+.section{
+    text-align: center;
+    background: #72D1E9;
+    color: white;
+}
+#cpuChart{
+    height: 100%;
+    width: 100%;
+}
