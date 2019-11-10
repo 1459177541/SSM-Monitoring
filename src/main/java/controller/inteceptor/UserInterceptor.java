@@ -22,8 +22,9 @@ public class UserInterceptor implements HandlerInterceptor {
                 .filter(cookie -> "uuid".equals(cookie.getName()))
                 .findFirst()
                 .map(Cookie::getValue)
-                .map(Integer::parseInt).get();
-        if (UUID != null && UUID.containsKey(uuid)) {
+                .map(Integer::parseInt)
+                .orElse(null);
+        if (uuid != null && UUID.containsKey(uuid)) {
             return true;
         }
         response.setStatus(403);

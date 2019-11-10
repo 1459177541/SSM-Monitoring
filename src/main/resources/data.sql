@@ -1,7 +1,8 @@
 INSERT INTO
     t_user
 VALUES
-    (1, 'root', 'root');
+    (1, 'root', 'root'),
+    (2, 'user', 'user');
 
 INSERT INTO
     t_group
@@ -12,7 +13,8 @@ VALUES
 INSERT INTO
     t_user_group
 VALUES
-    (1, 1);
+    (1, 1),
+    (2, 2);
 
 INSERT INTO
     t_group_power

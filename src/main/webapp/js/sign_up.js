@@ -9,7 +9,8 @@ $(document).ready(function(){
             $.post(
                 "register", 
                 {
-                    id:$("#uid").val(), 
+                    id:$("#uid").val(),
+                    name:$('#name').val(),
                     password:$("#pwd").val()
                 },
                 function(result){

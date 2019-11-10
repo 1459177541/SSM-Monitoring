@@ -2,7 +2,6 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -30,7 +29,7 @@ public class RootController {
 
     @GetMapping({"/err"})
     public String err(@RequestParam("err") int err){
-        return "err_page";
+        return String.valueOf(err);
     }
 
 }

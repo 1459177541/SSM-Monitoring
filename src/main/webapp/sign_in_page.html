@@ -4,17 +4,24 @@
     <meta charset="utf-8">
     <title>登录页面</title>
     <link rel="stylesheet" type="text/css" href="css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="css/login.css"/>
-    <script src="http://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/sign.css"/>
+    <link rel="stylesheet" type="text/css" href="css/sign_in.css"/>
+    <script src="js/jquery.min.js"></script>
     <script src="js/sign_in.js"></script>
 </head>
 
 <body>
     <div id="body">
+        <a id="pre" href="/">
+            <div>⬅主页</div>
+        </a>
+        <a id="close" href="/">
+            <div>×主页</div>
+        </a>
         <div id="main">
             <h1>登录</h1>
             <hr/>
-            <div class="input"><font>用户名</font><input id="uid" type=text/></div>
+            <div class="input"><font>用户ID</font><input id="uid" type=text/></div>
             <div class="input"><font>密码</font><input id="pwd" type="password"/></div>
             <div id="sign_in_button" class='button'>登录→</div>
             <a href="/sign_up">

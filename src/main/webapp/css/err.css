@@ -1,0 +1,19 @@
+/* CSS Document */
+#main{
+    color: white;
+    width: 800px;
+    height: 300px;
+    margin: 0 auto;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 200px;
+    text-align: center;
+}
+#main h1{
+    font-size: 240px;
+}
+.button{
+    font-size: 50px;
+}

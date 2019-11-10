@@ -4,17 +4,25 @@
     <meta charset="utf-8">
     <title>注册页面</title>
     <link rel="stylesheet" type="text/css" href="css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="css/login.css"/>
-    <script src="http://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/sign.css"/>
+    <link rel="stylesheet" type="text/css" href="css/sign_up.css"/>
+    <script src="js/jquery.min.js"></script>
     <script src="js/sign_up.js"></script>
 </head>
 
 <body>
     <div id="body">
+        <a id="pre" href="/sign_in">
+            <div>⬅登录</div>
+        </a>
+        <a id="close" href="/">
+            <div>×主页</div>
+        </a>
         <div id="main">
             <h1>注册</h1>
             <hr/>
-            <div class="input"><font>用户名</font><input id="uid" type=text/></div>
+            <div class="input"><font>用户ID</font><input id="uid" type=text/></div>
+            <div class="input"><font>用户名</font><input id="name" type=text/></div>
             <div class="input"><font>密码</font><input id="pwd" type="password"/></div>
             <div class="input"><font>确认密码</font><input id="pwd2" type="password"/></div>
             <div id="sign_up_button" class="button">注册→</div>
