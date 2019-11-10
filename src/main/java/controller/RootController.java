@@ -27,9 +27,10 @@ public class RootController {
         return "console_page";
     }
 
+    @SuppressWarnings("SpringMVCViewInspection")
     @GetMapping({"/err"})
     public String err(@RequestParam("err") int err){
-        return String.valueOf(err);
+        return "/err/"+err;
     }
 
 }
