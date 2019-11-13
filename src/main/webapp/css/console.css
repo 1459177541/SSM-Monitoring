@@ -10,33 +10,28 @@ a{
 li{
     list-style: none;
 }
-/*
-#menu{
+@keyframes loading{
+    from{color: #FFFFFF22}
+    to{color: white;}
+}
+#loading{
     position: fixed;
-    z-index: 999;
-    background: rgba(0,0,0,0.3);
-    padding: 5px;
-    border-radius: 5px;
-    left: 15px;
-    top:30%;
+    height: 100%;
+    width: 100%;
+    background: #72D1E9;
+    z-index: 900;
+    text-align: center;
+    padding: 300px 0;
+    color: white;
+    font-size: 120px;
+    animation: loading 1s;
+    animation-direction: alternate-reverse;
+    animation-iteration-count: infinite;
 }
-#menu li{
-    font-size: 25px;
-    margin: 5px;
-    padding: 3px 12px;
-    border-radius: 5px;
-}
-#menu li:hover{
-    background: rgba(0,0,0,0.7);
-}
-#menu .active{
-    background: rgba(0,0,0,0.7);
-}
-*/
 #menu{
     text-align: center;
     position: fixed;
-    z-index: 999;
+    z-index: 800;
     background: rgba(0,0,0,0.8);
     width: 40px;
     height: 100%;
@@ -65,7 +60,17 @@ li{
     background: #72D1E9;
     color: white;
 }
-#cpuChart{
+.chart{
     height: 100%;
     width: 100%;
+}
+#index_main{
+    position: absolute;
+    top:200px;
+    left: 0;
+    right: 0;
+}
+#index_main h1{
+    font-size: 180px;
+    margin-bottom: 50px;
 }

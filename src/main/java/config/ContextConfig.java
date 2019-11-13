@@ -2,6 +2,7 @@ package config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.hyperic.sigar.Sigar;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,8 @@ public class ContextConfig {
         return sqlSessionFactoryBean.getObject();
     }
 
+    @Bean
+    public Sigar sigar(){
+        return new Sigar();
+    }
 }
