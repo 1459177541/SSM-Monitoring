@@ -163,6 +163,7 @@ public class SigarTest {
             System.out.println("盘符类型名:    " + fs.getTypeName());
             // 文件系统类型
             System.out.println("盘符文件系统类型:    " + fs.getType());
+            System.out.println(fs.getOptions());
             FileSystemUsage usage = null;
             usage = sigar.getFileSystemUsage(fs.getDirName());
             switch (fs.getType()) {
@@ -182,6 +183,7 @@ public class SigarTest {
                     double usePercent = usage.getUsePercent() * 100D;
                     // 文件系统资源的利用率
                     System.out.println(fs.getDevName() + "资源的利用率:    " + usePercent + "%");
+                    System.out.println("files:"+usage.getFiles());
                     break;
                 case 3:// TYPE_NETWORK ：网络
                     break;

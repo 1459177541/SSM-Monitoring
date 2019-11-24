@@ -14,6 +14,7 @@ li{
     from{color: #FFFFFF22}
     to{color: white;}
 }
+/* loading */
 #loading{
     position: fixed;
     height: 100%;
@@ -28,6 +29,7 @@ li{
     animation-direction: alternate-reverse;
     animation-iteration-count: infinite;
 }
+/* menu */
 #menu{
     text-align: center;
     position: fixed;
@@ -40,7 +42,7 @@ li{
     color: white;
 }
 #menu:hover{
-    width: 120px;
+    width: 130px;
     background: #002;
 }
 #menu li{
@@ -55,11 +57,7 @@ li{
 #menu .active{
     background: #3A50D1;
 }
-.section{
-    text-align: center;
-    background: #72D1E9;
-    color: white;
-}
+/* general */
 .chart{
     height: 100%;
     width: 100%;
@@ -79,6 +77,32 @@ li{
 }
 .main .input input{
     width: 88%;
+}
+/* disk */
+#disk_main{
+    height: 100%;
+    width: 100%;
+    padding-top: 60px;
+    font-size: 50px;
+}
+#disk_main h1{
+    margin-bottom: 25px;
+}
+#disk_main .disk{
+    text-align: left;
+    margin: 10px -50px 10px 150px;
+    padding: 15px;
+    font-size: 25px;
+    border: 2px white solid;
+    border-radius: 10px;
+    width: 35%;
+    float: left;
+}
+/* full page */
+.section{
+    text-align: center;
+    background: #72D1E9;
+    color: white;
 }
 .fp-slide{
     float: left;
