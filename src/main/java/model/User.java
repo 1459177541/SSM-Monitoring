@@ -9,16 +9,7 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private String password;
-    private List<UserGroup> userGroups;
-
-    public User() {
-    }
-
-    public User(Long id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
+    private List<String> power;
 
     public Long getId() {
         return id;
@@ -47,12 +38,12 @@ public class User implements Serializable {
         return this;
     }
 
-    public List<UserGroup> getUserGroups() {
-        return userGroups;
+    public List<String> getPower() {
+        return power;
     }
 
-    public User setUserGroups(List<UserGroup> userGroups) {
-        this.userGroups = userGroups;
+    public User setPower(List<String> power) {
+        this.power = power;
         return this;
     }
 

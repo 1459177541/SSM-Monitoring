@@ -1,7 +1,7 @@
 package service;
 
-import model.MemInfo;
-import model.Status;
+import controller.vo.MemInfo;
+import controller.vo.Status;
 
 import java.util.List;
 

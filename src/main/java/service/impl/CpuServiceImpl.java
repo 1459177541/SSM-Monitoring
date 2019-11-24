@@ -1,6 +1,6 @@
 package service.impl;
 
-import model.Status;
+import controller.vo.Status;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package model;
+package controller.vo;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package model;
+package controller.vo;
 
 public class MemInfo {
     private String name;

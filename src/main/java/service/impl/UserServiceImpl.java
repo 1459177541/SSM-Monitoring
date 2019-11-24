@@ -1,6 +1,5 @@
 package service.impl;
 
-import mapper.GroupMapper;
 import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-    private final GroupMapper groupMapper;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, GroupMapper groupMapper) {
+    public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
-        this.groupMapper = groupMapper;
     }
 
     @Override

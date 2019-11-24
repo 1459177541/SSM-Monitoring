@@ -1,7 +1,7 @@
 package service.impl;
 
-import model.MemInfo;
-import model.Status;
+import controller.vo.MemInfo;
+import controller.vo.Status;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class MemServiceImpl implements MemService {
             return new Status()
                     .setTime(new Date())
                     .setStatus(Map.of(
-                            MEM, (double)sigar.getMem().getUsed()/1000.0D,
+                            MEM, (double)sigar.getMem().getActualUsed()/1000.0D,
                             SWAP, (double)sigar.getSwap().getUsed()/1000.0D
                     ));
         } catch (SigarException e) {

@@ -1,7 +1,6 @@
 package service;
 
-import model.Status;
-import org.hyperic.sigar.SigarException;
+import controller.vo.Status;
 
 import java.util.List;
 

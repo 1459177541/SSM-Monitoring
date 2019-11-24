@@ -2,6 +2,7 @@ package controller.vo;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class Response<T> implements Serializable {
 
@@ -77,6 +78,21 @@ public class Response<T> implements Serializable {
                 ", code=" + code +
                 ", message='" + message + '\'' +
                 '}';
+    }
+
+    public static <T> Response<T> create(Supplier<T> supplier){
+        Response<T> response = new Response<T>();
+        try{
+            response.setData(supplier.get())
+                    .setMessage("success")
+                    .setSuccess(true)
+                    .setCode(200);
+        } catch (Throwable e) {
+            response.setMessage(e.getMessage())
+                    .setSuccess(false)
+                    .setCode(400);
+        }
+        return response;
     }
 
     public static <T> Response<T> success(T data){

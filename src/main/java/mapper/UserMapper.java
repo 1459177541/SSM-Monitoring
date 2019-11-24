@@ -1,8 +1,8 @@
 package mapper;
 
 import model.User;
-import model.UserGroup;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,24 +16,20 @@ public interface UserMapper {
             "FROM t_user",
             "WHERE id=#{id}"
     })
-    @Results(id = "userMap", value = {
-            @Result(id = true, column = "id", property = "id"),
-            @Result(column = "name", property = "name"),
-            @Result(column = "password", property = "password"),
-            @Result(column = "id", property = "userGroups", many = @Many(select = "findGroup"))
+    @Results(
+            id="powerMap", value = {
+                    @Result(column = "id", property = "power",
+                            many = @Many(select = "findPower", fetchType = FetchType.EAGER))
     })
     public User findById(long id);
 
-    @Select({
-            "SELECT *",
-            "FROM t_group",
-            "WHERE id IN (SELECT gid FROM t_user_group WHERE id=#{id})"
-    })
-    @Results({
-            @Result(column = "id", property = "power", many = @Many(select = "mapper.GroupMapper.findPower"))
-    })
-    public List<UserGroup> findGroup(long id);
 
+    @Select({
+            "SELECT name",
+            "FROM t_power",
+            "WHERE uid=#{id}"
+    })
+    public List<String> findPower(long id);
 
     @Select({
             "SELECT id, name, password",
@@ -51,7 +47,7 @@ public interface UserMapper {
             "SELECT *",
             "FROM user"
     })
-    @ResultMap("userMap")
+    @ResultMap({"powerMap"})
     public List<User> findAll();
 
     @Insert({
