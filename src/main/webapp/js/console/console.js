@@ -1,6 +1,5 @@
 // JavaScript Document
 var start = function(power){
-    var anchors = [];
     power.forEach(function(element){
         $("#menu").append(powerMap[element].menu);
         anchors.push(powerMap[element].anchor);

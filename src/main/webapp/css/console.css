@@ -64,13 +64,53 @@ li{
     height: 100%;
     width: 100%;
 }
-#index_main{
-    position: absolute;
+.main{
+    position: relative;
+    width: 1300px;
     top:200px;
-    left: 0;
-    right: 0;
+    margin: 0 auto;
 }
-#index_main h1{
+.main h1{
     font-size: 180px;
     margin-bottom: 50px;
+}
+.main .input font{
+    width: 10%;
+}
+.main .input input{
+    width: 88%;
+}
+.fp-slide{
+    float: left;
+}
+.fp-slides{
+    position: absolute;
+    width: 100%;
+}
+.fp-controlArrow {
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
+    position: absolute;
+    z-index: 4;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: 25%;
+    -webkit-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+.fp-controlArrow.fp-prev {
+    left: 55px;
+    width: 0;
+    border-width: 70px 60px 70px 0;
+    border-color: transparent #fff transparent transparent;
+}
+.fp-controlArrow.fp-next {
+    right: 15px;
+    border-width: 70px 0 70px 60px;
+    border-color: transparent transparent transparent #fff;
 }

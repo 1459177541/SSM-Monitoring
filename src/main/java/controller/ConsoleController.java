@@ -67,4 +67,9 @@ public class ConsoleController {
         return Response.success(memService.memStatus());
     }
 
+    @GetMapping("/console/root_path")
+    public Response<List<String>> rootPath(){
+        return Response.success(fileService.getRootPath());
+    }
+
 }
