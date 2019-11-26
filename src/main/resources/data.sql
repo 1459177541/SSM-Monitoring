@@ -11,6 +11,7 @@ VALUES
        (1, 'index'),
        (1, 'cpu'),
        (1, 'mem'),
+       (1, 'net'),
        (1, 'disk'),
        (1, 'file'),
        (1, 'user'),

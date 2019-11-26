@@ -50,7 +50,7 @@ var mem = function(){
     });
     
     var set_info = function(info){
-        var opion = {legend:{data:[]}};
+        var option = {legend:{data:[]}};
         info.forEach(function(element, index, arr){
             seriesData.push({
                 name:element.name,
@@ -60,10 +60,10 @@ var mem = function(){
                 hoverAnimation:false, 
                 areaStyle:{}
             });
-            opion.legend.data.push(element.name);
+            option.legend.data.push(element.name);
         });
-        opion.series=seriesData;
-        memChart.setOption(opion);
+        option.series=seriesData;
+        memChart.setOption(option);
 
         var xAxisData = new Array(num);
         var addData = function () {

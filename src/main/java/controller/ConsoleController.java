@@ -1,18 +1,9 @@
 package controller;
 
-import controller.vo.DiskInfo;
-import controller.vo.Response;
-import controller.vo.MemInfo;
-import controller.vo.Status;
+import service.*;
+import controller.vo.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import service.CpuService;
-import service.DiskService;
-import service.FileService;
-import service.MemService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +18,19 @@ public class ConsoleController {
     private final MemService memService;
     private final FileService fileService;
     private final DiskService diskService;
+    private final NetService netService;
 
     @Autowired
     public ConsoleController(CpuService cpuService,
                              MemService memService,
                              FileService fileService,
-                             DiskService diskService) {
+                             DiskService diskService,
+                             NetService netService) {
         this.cpuService = cpuService;
         this.memService = memService;
         this.fileService = fileService;
         this.diskService = diskService;
+        this.netService = netService;
     }
 
     @GetMapping("power")
@@ -66,6 +60,16 @@ public class ConsoleController {
     @GetMapping("mem_status")
     public Response<Status> memStatus() {
         return Response.create(memService::memStatus);
+    }
+
+    @GetMapping("net_info")
+    public Response<List<String>> netInfo() {
+        return Response.create(netService::netInfo);
+    }
+
+    @GetMapping("net_status")
+    public Response<List<Status>> netStatus() {
+        return Response.create(netService::netStatus);
     }
 
     @GetMapping("disk")

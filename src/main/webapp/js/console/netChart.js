@@ -1,12 +1,11 @@
 // JavaScript Document
-var cpu = function(){
+var net = function(){
     var num=50;
     var seriesData = [];
-    var cpuChart = echarts.init(document.getElementById('cpuChart'));
-    
-    cpuChart.setOption({
+    var netChart = echarts.init(document.getElementById('netChart'));
+    netChart.setOption({
         title:{
-            text:'cpu',
+            text:'net',
             left:45
         },
         tooltip:{
@@ -34,51 +33,67 @@ var cpu = function(){
             left:0,
             right:0,
             top:50,
-            bottom:0
+            bottom:20
         },
         xAxis:{
             type:'category',
             boundaryGap:false,
             data:new Array(num)
         },
-        yAxis:{
+        yAxis:[{
             type:'value',
+            name:'up',
+            min:0,
+            position:'left'
+        },{
+            type:'value',
+            name:'down',
             min:0,
             position:'right'
-        }
+        }]
     });
-    
+
     var set_info = function(info){
         var option = {legend:{}};
         info.forEach(function(element, index, arr){
             seriesData.push({
-                name:element, 
+                name:element,
                 data:new Array(num), 
-                type:'line', 
+                type:'line',
+                lineStyle:'solid',
                 showSymbol: false, 
-                hoverAnimation:false, 
-                areaStyle:{}
+                hoverAnimation:false,
+                yAxisIndex:0
             });
+            seriesData.push({
+                name:element,
+                data:new Array(num),
+                type:'line',
+                lineStyle:'dashed',
+                showSymbol: false,
+                hoverAnimation:false,
+                yAxisIndex:1
+            })
         });
         option.legend.data = info;
         option.series=seriesData;
-        cpuChart.setOption(option);
+        netChart.setOption(option);
         
         var xAxisData = new Array(num);
         var addData = function () {
             $.get(
-                '/console/cpu_status',
+                '/console/net_status',
                 function (data) {
                     xAxisData.shift();
-                    var date = new Date(data.data.time);
+                    var date = new Date(data.data[0].time);
                     xAxisData.push((date.getMonth()+1)+'月'+date.getDate()+'日'
                         +' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
                         +' '+date.getMilliseconds());
                     seriesData.forEach(function (element) {
                         element.data.shift();
-                        element.data.push(data.data.status[element.name].toFixed(3));
+                        element.data.push(data.data[element.yAxisIndex].status[element.name].toFixed(3));
                     });
-                    cpuChart.setOption({
+                    netChart.setOption({
                         xAxis: {data: xAxisData},
                         series: seriesData
                     });
@@ -95,7 +110,7 @@ var cpu = function(){
         //     });
         //     xAxisData.shift();
         //     xAxisData.push(count);
-        //     cpuChart.setOption({
+        //     netChart.setOption({
         //         xAxis: {data:xAxisData},
         //         series: seriesData
         //     });
@@ -105,11 +120,12 @@ var cpu = function(){
     };
 
     $.get(
-        '/console/cpu_info',
+        '/console/net_info',
         function (data) {
+            console.log(2);
             set_info(data.data);
         }
     );
-    // var info = ['cpu0', 'cpu1', 'cpu2', 'cpu3'];
+    // var info = ['net0', 'net1', 'net2', 'net3'];
     // set_info(info);
 };

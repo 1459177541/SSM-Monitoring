@@ -10,28 +10,35 @@ var powerMap = {
                     '<h2>或者滑动鼠标滚轮切换</h2>' +
                 '</div>' +
             '</div>',
-        order:0
+        order:10
     },
     cpu:{
         menu:'<li data-menuanchor="cpu_anchor"><a href="#cpu_anchor">处理器</a></li>',
         anchor:'cpu_anchor',
         doc:'<div id="cpu" class="section"><div id="cpuChart" class="chart"></div></div>',
         method:cpu,
-        order:10
+        order:20
     },
     mem:{
         menu:'<li data-menuanchor="mem_anchor"><a href="#mem_anchor">内存</a></li>',
         anchor:'mem_anchor',
         doc:'<div id="men" class="section"><div id="memChart" class="chart"></div></div>',
         method:mem,
-        order:20
+        order:30
+    },
+    net:{
+        menu:'<li data-menuanchor="net_anchor"><a href="#net_anchor">网络</a></li>',
+        anchor:'net_anchor',
+        doc:'<div id="net" class="section"><div id="netChart" class="chart"></div></div>',
+        method:net,
+        order:40
     },
     disk:{
         menu:'<li data-menuanchor="disk_anchor"><a href="#disk_anchor">磁盘</a></li>',
         anchor:'disk_anchor',
         doc:'<div id="disk" class="section"><div id="disk_main"><h1>磁盘监控</h1></div></div>',
         method:disk,
-        order:30
+        order:50
     },
     file:{
         menu:'<li data-menuanchor="file_anchor"><a href="#file_anchor">文件</a></li>',
@@ -51,12 +58,12 @@ var powerMap = {
                 '</div>' +
             '</div>',
         method: file,
-        order:40
+        order:60
     },
     user:{
         menu:'<li data-menuanchor="user_anchor"><a href="#user_anchor">用户管理</a></li>',
         anchor:'user_anchor',
         doc:'<div id="user" class="section">USER</div>',
-        order:50
+        order:70
     }
 };
