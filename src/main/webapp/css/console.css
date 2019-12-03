@@ -57,6 +57,11 @@ li{
 #menu .active{
     background: #3A50D1;
 }
+#menu #sing_out{
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+}
 /* general */
 .chart{
     height: 100%;

@@ -122,7 +122,6 @@ var net = function(){
     $.get(
         '/console/net_info',
         function (data) {
-            console.log(2);
             set_info(data.data);
         }
     );

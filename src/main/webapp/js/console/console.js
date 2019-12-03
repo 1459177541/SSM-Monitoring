@@ -12,6 +12,7 @@ var start = function(power){
     power.forEach(function(element){
        powerMap[element].method?powerMap[element].method():null; 
     });
+    $("#menu").append('<li id="sing_out"><a href="/sign_out">登出</a></li>');
     $('#loading').remove();
 };
 $(document).ready(function(){

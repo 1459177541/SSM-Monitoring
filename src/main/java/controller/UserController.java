@@ -4,6 +4,8 @@ import controller.vo.Response;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.SignService;
@@ -37,5 +39,12 @@ public class UserController {
             return Response.fail("").setMessage("用户名或密码错误");
         }
     }
+
+    @GetMapping({"/sign_out"})
+    public String signOut(@CookieValue("uuid") String uuid) {
+        signService.remove(uuid);
+        return "redirect:/";
+    }
+
 
 }
