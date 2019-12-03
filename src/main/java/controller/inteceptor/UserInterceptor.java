@@ -1,30 +1,33 @@
 package controller.inteceptor;
 
-
-import model.User;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import service.SignService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class UserInterceptor implements HandlerInterceptor {
 
-    public static ConcurrentHashMap<Integer, User> UUID = new ConcurrentHashMap<>();
+    private final SignService signService;
+
+    public UserInterceptor(SignService signService) {
+        this.signService = signService;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        final Integer uuid = Arrays
+        String uuid = Arrays
                 .stream(request.getCookies())
                 .filter(cookie -> "uuid".equals(cookie.getName()))
                 .findFirst()
                 .map(Cookie::getValue)
-                .map(Integer::parseInt)
                 .orElse(null);
-        if (uuid != null && UUID.containsKey(uuid)) {
+        if (signService.contain(uuid)) {
             return true;
         }
         response.setStatus(403);

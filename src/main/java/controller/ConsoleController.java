@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static controller.inteceptor.UserInterceptor.UUID;
-
 @RestController
 @RequestMapping("/console/")
 public class ConsoleController {
 
+    private final SignService signService;
     private final CpuService cpuService;
     private final MemService memService;
     private final FileService fileService;
@@ -21,11 +20,13 @@ public class ConsoleController {
     private final NetService netService;
 
     @Autowired
-    public ConsoleController(CpuService cpuService,
+    public ConsoleController(SignService signService,
+                             CpuService cpuService,
                              MemService memService,
                              FileService fileService,
                              DiskService diskService,
                              NetService netService) {
+        this.signService = signService;
         this.cpuService = cpuService;
         this.memService = memService;
         this.fileService = fileService;
@@ -34,12 +35,12 @@ public class ConsoleController {
     }
 
     @GetMapping("power")
-    public Response<List<String>> getPower(@CookieValue(value = "uuid", required = false) Integer uuid){
+    public Response<List<String>> getPower(@CookieValue(value = "uuid", required = false) String uuid){
         if (uuid == null) {
             List<String> data = new ArrayList<>();
             return Response.fail(data).setMessage("未登录");
         }
-        return Response.success(UUID.get(uuid).getPower());
+        return Response.success(signService.getUser(uuid).getPower());
     }
 
     @GetMapping("cpu_info")

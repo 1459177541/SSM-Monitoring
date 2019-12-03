@@ -1,6 +1,7 @@
 package config;
 
 import controller.inteceptor.UserInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+    private final UserInterceptor userInterceptor;
+
+    @Autowired
+    public MvcConfig(UserInterceptor userInterceptor) {
+        this.userInterceptor = userInterceptor;
+    }
+
     @Bean
     public ViewResolver viewResolver(){
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -30,7 +38,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserInterceptor()).addPathPatterns("/console", "/console/**");
+        registry.addInterceptor(userInterceptor).addPathPatterns("/console", "/console/**");
     }
 
     @Override

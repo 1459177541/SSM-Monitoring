@@ -6,36 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import service.SignService;
 import service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static controller.inteceptor.UserInterceptor.UUID;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
-
-    static ThreadLocalRandom random = ThreadLocalRandom.current();
+    private final SignService signService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SignService signService) {
         this.userService = userService;
+        this.signService = signService;
     }
 
     @PostMapping({"/sign_in"})
     @ResponseBody
-    public Response<String> sign_in(User user, HttpServletResponse response){
+    public Response<String> signIn(User user, HttpServletResponse response){
         if (userService.login(user)) {
             user = userService.getUserInfo(user.getId());
-            int uuid;
-            do{
-                uuid = random.nextInt(Integer.MAX_VALUE);
-            } while (UUID.putIfAbsent(uuid, user) != null);
-            Cookie cookie = new Cookie("uuid", String.valueOf(uuid));
+            Cookie cookie = new Cookie("uuid", signService.add(user).toString());
             cookie.setMaxAge(30*60);
             response.addCookie(cookie);
             return Response.success("/console");
