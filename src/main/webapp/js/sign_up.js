@@ -1,5 +1,9 @@
 // JavaScript Document
 $(document).ready(function(){
+    $('#dialog').hide();
+    $('#console_button').click(function () {
+        window.location.href = '/console';
+    });
     $('#sign_up_button').click(function(){
         if($('#pwd').val()===''||$('#pwd2').val()===''){
             $('#err').text('密码为空');
@@ -7,7 +11,7 @@ $(document).ready(function(){
             $("#err").text('两次输入密码不匹配');
         } else {
             $.post(
-                "register", 
+                "sign_up",
                 {
                     id:$("#uid").val(),
                     name:$('#name').val(),
@@ -15,7 +19,9 @@ $(document).ready(function(){
                 },
                 function(result){
                     if(result.success){
-                        window.location.href = result.data;
+                        // window.location.href = result.data;
+                        $('#message').text("您的ID为："+result.data);
+                        $("#dialog").show();
                     }else{
                         $('#err').text(result.data);
                     }

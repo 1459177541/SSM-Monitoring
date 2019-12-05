@@ -1,5 +1,6 @@
 package service.impl;
 
+import mapper.PowerMapper;
 import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final PowerMapper powerMapper;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, PowerMapper powerMapper) {
         this.userMapper = userMapper;
+        this.powerMapper = powerMapper;
     }
 
     @Override
@@ -37,6 +40,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long register(User user) {
-        return userMapper.save(user);
+        if (1==userMapper.save(user)) {
+            long id = user.getId();
+            powerMapper.addPower(id, "index");
+            return id;
+        } else {
+            throw new RuntimeException("添加失败");
+        }
     }
 }

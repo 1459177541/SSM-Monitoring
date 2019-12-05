@@ -19,17 +19,10 @@ public interface UserMapper {
     @Results(
             id="powerMap", value = {
                     @Result(column = "id", property = "power",
-                            many = @Many(select = "findPower", fetchType = FetchType.EAGER))
+                            many = @Many(select = "mapper.PowerMapper.findPower",
+                                    fetchType = FetchType.EAGER))
     })
     public User findById(long id);
-
-
-    @Select({
-            "SELECT name",
-            "FROM t_power",
-            "WHERE uid=#{id}"
-    })
-    public List<String> findPower(long id);
 
     @Select({
             "SELECT id, name, password",
@@ -51,9 +44,10 @@ public interface UserMapper {
     public List<User> findAll();
 
     @Insert({
-            "INSERT INTO user",
-            "VALUES (#{user.id},#{user.name},#{user.password})"
+            "INSERT INTO t_user(name, password)",
+            "VALUES (#{name},#{password})"
     })
-    public long save(User user);
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    public int save(User user);
 
 }

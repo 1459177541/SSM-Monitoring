@@ -1,5 +1,5 @@
 CREATE TABLE t_user(
-    id BIGINT,
+    id BIGINT AUTO_INCREMENT,
     name VARCHAR(32) NOT NULL,
     password VARCHAR(64) NOT NULL,
     PRIMARY KEY (id)

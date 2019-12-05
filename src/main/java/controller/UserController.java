@@ -32,7 +32,7 @@ public class UserController {
         if (userService.login(user)) {
             user = userService.getUserInfo(user.getId());
             Cookie cookie = new Cookie("uuid", signService.add(user).toString());
-            cookie.setMaxAge(30*60);
+            cookie.setMaxAge(30 * 60);
             response.addCookie(cookie);
             return Response.success("/console");
         } else {
@@ -47,4 +47,17 @@ public class UserController {
     }
 
 
+    @PostMapping({"/sign_up"})
+    @ResponseBody
+    public Response<Long> signUp(User user, HttpServletResponse response) {
+        try {
+            long id = userService.register(user);
+            Cookie cookie = new Cookie("uuid", signService.add(userService.getUserInfo(id)).toString());
+            cookie.setMaxAge(30 * 60);
+            response.addCookie(cookie);
+            return Response.success(id);
+        } catch (Exception e) {
+            return Response.fail(0L).setMessage(e.getMessage());
+        }
+    }
 }
