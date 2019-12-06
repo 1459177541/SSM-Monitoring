@@ -1,17 +1,26 @@
 package service.impl;
 
 import model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.SignService;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class SignServiceImpl implements SignService {
 
-    private final Map<UUID, User> userMap = new ConcurrentHashMap<>();
+    private Map<UUID, User> userMap = new ConcurrentHashMap<>();
+    private final UserServiceImpl userService;
+
+    @Autowired
+    public SignServiceImpl(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UUID add(User user) {
@@ -55,5 +64,17 @@ public class SignServiceImpl implements SignService {
     @Override
     public boolean contain(String uuid) {
         return uuid != null && contain(UUID.fromString(uuid));
+    }
+
+    @Override
+    public void reload() {
+        userMap = userMap
+                .keySet()
+                .stream()
+                .collect(Collectors
+                        .toMap(Function.identity(),
+                                uuid -> userService.getUserInfo(userMap.get(uuid).getId()),
+                                (a,b)-> a,
+                                ConcurrentHashMap::new));
     }
 }

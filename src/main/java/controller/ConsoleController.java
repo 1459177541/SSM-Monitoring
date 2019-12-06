@@ -83,4 +83,9 @@ public class ConsoleController {
         return Response.create(fileService::getRootPath);
     }
 
+    @PostMapping("file_list")
+    @ResponseBody
+    public Response<List<FileInfo>> file(@RequestParam("url") String url) {
+        return Response.create(()->fileService.getFileList(url));
+    }
 }

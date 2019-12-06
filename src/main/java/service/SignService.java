@@ -13,5 +13,6 @@ public interface SignService {
     public void remove(String uuid);
     public boolean contain(UUID uuid);
     public boolean contain(String uuid);
+    public void reload();
 
 }
