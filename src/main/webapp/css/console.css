@@ -158,6 +158,11 @@ li{
 .file_op {
     width: 100%;
     height: 50px;
+    padding: 0 50px;
+}
+.file_op .button {
+    display: none;
+    margin: 0 135px;
 }
 .file_file {
     width: 80px;
@@ -179,4 +184,7 @@ li{
     padding-top: 5px;
     text-shadow: 1px 1px 1px #888888;
     border-radius: 3px;
+}
+.select_file .file_image {
+    background: burlywood;
 }
