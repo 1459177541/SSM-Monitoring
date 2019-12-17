@@ -88,6 +88,7 @@ public class Response<T> implements Serializable {
                     .setSuccess(true)
                     .setCode(200);
         } catch (Throwable e) {
+            e.printStackTrace();
             response.setMessage(e.getMessage())
                     .setSuccess(false)
                     .setCode(400);

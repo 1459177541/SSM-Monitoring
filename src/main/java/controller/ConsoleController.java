@@ -1,10 +1,15 @@
 package controller;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.*;
 import controller.vo.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +90,14 @@ public class ConsoleController {
 
     @PostMapping("file_list")
     @ResponseBody
-    public Response<List<FileInfo>> file(@RequestParam("url") String url) {
+    public Response<List<FileInfo>> fileList(@RequestParam("url") String url) {
         return Response.create(()->fileService.getFileList(url));
+    }
+
+    @PostMapping(value = "file_upload")
+    @ResponseBody
+    public Response<String> fileUpload(HttpServletRequest request) throws FileUploadException {
+        List<FileItem> attr = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+        return Response.create(() -> fileService.upload(attr));
     }
 }

@@ -1,6 +1,7 @@
 package service.impl;
 
 import controller.vo.FileInfo;
+import org.apache.commons.fileupload.FileItem;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import service.FileService;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +44,35 @@ public class FileServiceImpl implements FileService {
                 .stream(Objects.requireNonNull(new File(url).listFiles()))
                 .map(FileInfo::create)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String upload(List<FileItem> attr) {
+        String url = attr.stream()
+                .filter(FileItem::isFormField)
+                .filter(fileItem -> "url".equals(fileItem.getFieldName()))
+                .map(fileItem -> {
+                    try {
+                        return fileItem.getString("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .findFirst()
+                .orElseThrow();
+        System.out.println(url);
+        attr.forEach(System.out::println);
+        attr.stream()
+                .filter(fileItem -> !fileItem.isFormField())
+                .forEach(fileItem -> {
+                    try {
+                        System.out.println(url+System.getProperty("file.separator")+fileItem.getName());
+                        fileItem.write(new File(url+System.getProperty("file.separator")+fileItem.getName()));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        return "success";
     }
 
 }

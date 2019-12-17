@@ -155,13 +155,16 @@ li{
 .file_menu {
     margin-top: 10px;
 }
+.file_upload {
+    position: fixed;
+    top:200px;
+}
 .file_op {
     width: 100%;
     height: 50px;
     padding: 0 50px;
 }
 .file_op .button {
-    display: none;
     margin: 0 135px;
 }
 .file_file {
