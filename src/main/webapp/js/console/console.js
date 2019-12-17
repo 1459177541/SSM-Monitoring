@@ -16,16 +16,16 @@ var start = function(power){
     $('#loading').remove();
 };
 $(document).ready(function(){
-   $.get(
-     '/console/power',
-     function (result) {
-         var power = result.data.sort(function (a, b) {
-             var ao = powerMap[a]?powerMap[a].order:0;
-             var bo = powerMap[b]?powerMap[b].order:0;
-             return ao-bo;
-         });
-         start(power);
-     }
-   );
-//     start(['index', 'cpu', 'mem', 'file', 'user']);
+    $.ajax({
+        url: '/console/power',
+        method: 'GET',
+        success: function (result) {
+            var power = result.data.sort(function (a, b) {
+                var ao = powerMap[a] ? powerMap[a].order : 0;
+                var bo = powerMap[b] ? powerMap[b].order : 0;
+                return ao - bo;
+            });
+            start(power);
+        }
+    });
 });

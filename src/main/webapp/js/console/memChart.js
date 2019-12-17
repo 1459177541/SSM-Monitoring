@@ -51,7 +51,7 @@ var mem = function(){
     
     var set_info = function(info){
         var option = {legend:{data:[]}};
-        info.forEach(function(element, index, arr){
+        info.forEach(function(element){
             seriesData.push({
                 name:element.name,
                 data:new Array(num), 
@@ -67,14 +67,15 @@ var mem = function(){
 
         var xAxisData = new Array(num);
         var addData = function () {
-            $.get(
-                '/console/mem_status',
-                function (data) {
+            $.ajax({
+                url: '/console/mem_status',
+                method: 'GET',
+                success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data.time);
-                    xAxisData.push((date.getMonth()+1)+'月'+date.getDate()+'日'
-                        +' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
-                        +' '+date.getMilliseconds());
+                    xAxisData.push((date.getMonth() + 1) + '月' + date.getDate() + '日'
+                        + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                        + ' ' + date.getMilliseconds());
                     seriesData.forEach(function (element) {
                         element.data.shift();
                         element.data.push(data.data.status[element.name]);
@@ -85,44 +86,16 @@ var mem = function(){
                     });
                     setTimeout(addData, 500);
                 }
-            );
+            });
         };
-        // var count = 0;
-        // var addData = function(){
-        //     count++;
-        //     seriesData.forEach(function(element, index, arr){
-        //         element.data.shift();
-        //         element.data.push(Math.random()*8*1024*1024);
-        //     });
-        //     xAxisData.shift();
-        //     xAxisData.push(count);
-        //     memChart.setOption({
-        //         xAxis: {data:xAxisData},
-        //         series: seriesData
-        //     });
-        //     setTimeout(addData, 500);
-        // };
         addData();
     };
 
-    $.get(
-        '/console/mem_info',
-        function (data) {
+    $.ajax({
+        url: '/console/mem_info',
+        method: 'GET',
+        success: function (data) {
             set_info(data.data);
         }
-    );
-    // var info = [
-    //     {
-    //         type:'value',
-    //         name:'memery',
-    //         min:0,
-    //         max:8*1024*1024
-    //     },{
-    //         type:'value',
-    //         name:'swap',
-    //         min:0,
-    //         max:8*1024*1024
-    //     }
-    // ];
-    // set_info(info);
+    });
 };

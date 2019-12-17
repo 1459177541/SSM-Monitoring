@@ -55,7 +55,7 @@ var net = function(){
 
     var set_info = function(info){
         var option = {legend:{}};
-        info.forEach(function(element, index, arr){
+        info.forEach(function(element){
             seriesData.push({
                 name:element,
                 data:new Array(num), 
@@ -81,14 +81,15 @@ var net = function(){
         
         var xAxisData = new Array(num);
         var addData = function () {
-            $.get(
-                '/console/net_status',
-                function (data) {
+            $.ajax({
+                url: '/console/net_status',
+                method: 'GET',
+                success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data[0].time);
-                    xAxisData.push((date.getMonth()+1)+'月'+date.getDate()+'日'
-                        +' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
-                        +' '+date.getMilliseconds());
+                    xAxisData.push((date.getMonth() + 1) + '月' + date.getDate() + '日'
+                        + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                        + ' ' + date.getMilliseconds());
                     seriesData.forEach(function (element) {
                         element.data.shift();
                         element.data.push(data.data[element.yAxisIndex].status[element.name].toFixed(3));
@@ -99,32 +100,16 @@ var net = function(){
                     });
                     setTimeout(addData, 500);
                 }
-            );
+            });
         };
-        // var count = 0;
-        // var addData = function(){
-        //     count++;
-        //     seriesData.forEach(function(element, index, arr){
-        //         element.data.shift();
-        //         element.data.push(Math.random()*100);
-        //     });
-        //     xAxisData.shift();
-        //     xAxisData.push(count);
-        //     netChart.setOption({
-        //         xAxis: {data:xAxisData},
-        //         series: seriesData
-        //     });
-        //     setTimeout(addData, 500);
-        // };
         addData();
     };
 
-    $.get(
-        '/console/net_info',
-        function (data) {
+    $.ajax({
+        url: '/console/net_info',
+        method: 'GET',
+        success: function (data) {
             set_info(data.data);
         }
-    );
-    // var info = ['net0', 'net1', 'net2', 'net3'];
-    // set_info(info);
+    });
 };

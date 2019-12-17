@@ -50,7 +50,7 @@ var cpu = function(){
     
     var set_info = function(info){
         var option = {legend:{}};
-        info.forEach(function(element, index, arr){
+        info.forEach(function(element){
             seriesData.push({
                 name:element, 
                 data:new Array(num), 
@@ -66,14 +66,15 @@ var cpu = function(){
         
         var xAxisData = new Array(num);
         var addData = function () {
-            $.get(
-                '/console/cpu_status',
-                function (data) {
+            $.ajax({
+                url: '/console/cpu_status',
+                method: 'GET',
+                success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data.time);
-                    xAxisData.push((date.getMonth()+1)+'月'+date.getDate()+'日'
-                        +' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
-                        +' '+date.getMilliseconds());
+                    xAxisData.push((date.getMonth() + 1) + '月' + date.getDate() + '日'
+                        + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                        + ' ' + date.getMilliseconds());
                     seriesData.forEach(function (element) {
                         element.data.shift();
                         element.data.push(data.data.status[element.name].toFixed(3));
@@ -84,32 +85,16 @@ var cpu = function(){
                     });
                     setTimeout(addData, 500);
                 }
-            );
+            });
         };
-        // var count = 0;
-        // var addData = function(){
-        //     count++;
-        //     seriesData.forEach(function(element, index, arr){
-        //         element.data.shift();
-        //         element.data.push(Math.random()*100);
-        //     });
-        //     xAxisData.shift();
-        //     xAxisData.push(count);
-        //     cpuChart.setOption({
-        //         xAxis: {data:xAxisData},
-        //         series: seriesData
-        //     });
-        //     setTimeout(addData, 500);
-        // };
         addData();
     };
 
-    $.get(
-        '/console/cpu_info',
-        function (data) {
+    $.ajax({
+        url: '/console/cpu_info',
+        method: 'GET',
+        success: function (data) {
             set_info(data.data);
         }
-    );
-    // var info = ['cpu0', 'cpu1', 'cpu2', 'cpu3'];
-    // set_info(info);
+    });
 };

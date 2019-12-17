@@ -60,13 +60,10 @@ public class FileServiceImpl implements FileService {
                 })
                 .findFirst()
                 .orElseThrow();
-        System.out.println(url);
-        attr.forEach(System.out::println);
         attr.stream()
                 .filter(fileItem -> !fileItem.isFormField())
                 .forEach(fileItem -> {
                     try {
-                        System.out.println(url+System.getProperty("file.separator")+fileItem.getName());
                         fileItem.write(new File(url+System.getProperty("file.separator")+fileItem.getName()));
                     } catch (Exception e) {
                         throw new RuntimeException(e);

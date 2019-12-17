@@ -89,13 +89,11 @@ public class ConsoleController {
     }
 
     @PostMapping("file_list")
-    @ResponseBody
     public Response<List<FileInfo>> fileList(@RequestParam("url") String url) {
         return Response.create(()->fileService.getFileList(url));
     }
 
     @PostMapping(value = "file_upload")
-    @ResponseBody
     public Response<String> fileUpload(HttpServletRequest request) throws FileUploadException {
         List<FileItem> attr = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
         return Response.create(() -> fileService.upload(attr));
