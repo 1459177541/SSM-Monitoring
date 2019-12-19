@@ -16,4 +16,7 @@ public interface FileService {
     boolean delete(String url);
 
     boolean reName(String url, String name);
+
+    boolean mkdir(String url, String name);
+
 }

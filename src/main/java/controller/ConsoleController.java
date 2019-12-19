@@ -101,13 +101,17 @@ public class ConsoleController {
 
     @PostMapping("file_delete")
     public Response<Boolean> fileDelete(@RequestParam("url") String url) {
-        return Response.create(()->fileService.delete(url));
+        return Response.create(() -> fileService.delete(url));
     }
 
     @PostMapping("file_rename")
     public Response<Boolean> fileRename(@RequestParam("url") String url, @RequestParam("name") String name) {
-        return Response.create(()->fileService.reName(url, name));
+        return Response.create(() -> fileService.reName(url, name));
     }
 
+    @PostMapping("file_mkdir")
+    public Response<Boolean> fileMkdir(@RequestParam("url") String url, @RequestParam("name") String name) {
+        return Response.create(() -> fileService.mkdir(url, name));
+    }
 
 }

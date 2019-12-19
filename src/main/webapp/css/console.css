@@ -28,6 +28,7 @@ li{
     animation: loading 1s;
     animation-direction: alternate-reverse;
     animation-iteration-count: infinite;
+    transition: all .5s ease;
 }
 /* menu */
 #menu{
@@ -159,7 +160,7 @@ li{
     padding: 3px;
     border-radius: 3px;
 }
-.file_upload,.file_rename {
+.file_dialog {
     position: relative;
     top: -500px;
     background: #72D1E9;
@@ -171,10 +172,10 @@ li{
     border: 2px white solid;
     overflow: hidden;
 }
-.file_upload,.file_rename .button {
+.file_dialog .button {
     margin: 10px auto;
 }
-.file_rename .input {
+.file_dialog .input {
     margin: 0 auto;
 }
 .file_op {

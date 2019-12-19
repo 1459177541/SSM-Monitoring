@@ -81,7 +81,12 @@ public class FileServiceImpl implements FileService {
     @Override
     public boolean reName(String url, String name) {
         File old = new File(url);
-        return old.renameTo(new File(old.getParent()+SEPARATOR+name));
+        return old.renameTo(new File(old.getParent() + SEPARATOR + name));
+    }
+
+    @Override
+    public boolean mkdir(String url, String name) {
+        return new File(url + SEPARATOR + name).mkdir();
     }
 
 }

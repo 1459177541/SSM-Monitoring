@@ -13,7 +13,7 @@ var start = function(power){
        powerMap[element].method?powerMap[element].method():null; 
     });
     $("#menu").append('<li id="sing_out"><a href="/sign_out">登出</a></li>');
-    $('#loading').remove();
+    $('#loading').hide();
 };
 $(document).ready(function(){
     $.ajax({
