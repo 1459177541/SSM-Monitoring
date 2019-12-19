@@ -40,7 +40,7 @@ public class ConsoleController {
     }
 
     @GetMapping("power")
-    public Response<List<String>> getPower(@CookieValue(value = "uuid", required = false) String uuid){
+    public Response<List<String>> getPower(@CookieValue(value = "uuid", required = false) String uuid) {
         if (uuid == null) {
             List<String> data = new ArrayList<>();
             return Response.fail(data).setMessage("未登录");
@@ -79,18 +79,18 @@ public class ConsoleController {
     }
 
     @GetMapping("disk")
-    public Response<List<DiskInfo>> disk(){
+    public Response<List<DiskInfo>> disk() {
         return Response.create(diskService::getDiskInfo);
     }
 
     @GetMapping("root_path")
-    public Response<List<String>> rootPath(){
+    public Response<List<String>> rootPath() {
         return Response.create(fileService::getRootPath);
     }
 
     @PostMapping("file_list")
     public Response<List<FileInfo>> fileList(@RequestParam("url") String url) {
-        return Response.create(()->fileService.getFileList(url));
+        return Response.create(() -> fileService.getFileList(url));
     }
 
     @PostMapping(value = "file_upload")
@@ -98,4 +98,16 @@ public class ConsoleController {
         List<FileItem> attr = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
         return Response.create(() -> fileService.upload(attr));
     }
+
+    @PostMapping("file_delete")
+    public Response<Boolean> fileDelete(@RequestParam("url") String url) {
+        return Response.create(()->fileService.delete(url));
+    }
+
+    @PostMapping("file_rename")
+    public Response<Boolean> fileRename(@RequestParam("url") String url, @RequestParam("name") String name) {
+        return Response.create(()->fileService.reName(url, name));
+    }
+
+
 }

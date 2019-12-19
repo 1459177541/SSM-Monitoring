@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface FileService {
 
-    public List<String> getRootPath();
+    List<String> getRootPath();
 
     List<FileInfo> getFileList(String url);
 
     String upload(List<FileItem> attr);
+
+    boolean delete(String url);
+
+    boolean reName(String url, String name);
 }

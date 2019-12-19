@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class FileServiceImpl implements FileService {
 
     private final Sigar sigar;
+    private static final String SEPARATOR = System.getProperty("file.separator");
 
     @Autowired
     public FileServiceImpl(Sigar sigar) {
@@ -64,12 +65,23 @@ public class FileServiceImpl implements FileService {
                 .filter(fileItem -> !fileItem.isFormField())
                 .forEach(fileItem -> {
                     try {
-                        fileItem.write(new File(url+System.getProperty("file.separator")+fileItem.getName()));
+                        fileItem.write(new File(url+SEPARATOR+fileItem.getName()));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
         return "success";
+    }
+
+    @Override
+    public boolean delete(String url) {
+        return new File(url).delete();
+    }
+
+    @Override
+    public boolean reName(String url, String name) {
+        File old = new File(url);
+        return old.renameTo(new File(old.getParent()+SEPARATOR+name));
     }
 
 }

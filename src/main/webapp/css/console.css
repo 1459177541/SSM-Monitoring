@@ -154,7 +154,12 @@ li{
 .file_menu {
     margin-top: 10px;
 }
-.file_upload {
+.file_input {
+    border: 1px white solid;
+    padding: 3px;
+    border-radius: 3px;
+}
+.file_upload,.file_rename {
     position: relative;
     top: -500px;
     background: #72D1E9;
@@ -166,13 +171,11 @@ li{
     border: 2px white solid;
     overflow: hidden;
 }
-.file_input {
-    border: 1px white solid;
-    padding: 3px;
-    border-radius: 3px;
-}
-.file_upload .button {
+.file_upload,.file_rename .button {
     margin: 10px auto;
+}
+.file_rename .input {
+    margin: 0 auto;
 }
 .file_op {
     width: 100%;
@@ -183,6 +186,7 @@ li{
     margin: 0 15px;
     display: inline-block;
     float: left;
+    width: auto;
 }
 .file_file {
     width: 80px;
