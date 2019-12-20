@@ -9,7 +9,10 @@ import controller.vo.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class ConsoleController {
     private final FileService fileService;
     private final DiskService diskService;
     private final NetService netService;
+    private final RemoteDesktopService desktopService;
 
     @Autowired
     public ConsoleController(SignService signService,
@@ -30,13 +34,15 @@ public class ConsoleController {
                              MemService memService,
                              FileService fileService,
                              DiskService diskService,
-                             NetService netService) {
+                             NetService netService,
+                             RemoteDesktopService desktopService) {
         this.signService = signService;
         this.cpuService = cpuService;
         this.memService = memService;
         this.fileService = fileService;
         this.diskService = diskService;
         this.netService = netService;
+        this.desktopService = desktopService;
     }
 
     @GetMapping("power")
@@ -127,5 +133,10 @@ public class ConsoleController {
     @PostMapping("file_remove_watch")
     public Response<Boolean> fileRemoveWatch(@RequestParam("url") String url) {
         return Response.create(() -> fileService.removeWatch(url));
+    }
+
+    @GetMapping("desktop")
+    public void desktop(HttpServletResponse response) throws IOException {
+        ImageIO.write(desktopService.screenshots(), "jpeg", response.getOutputStream());
     }
 }

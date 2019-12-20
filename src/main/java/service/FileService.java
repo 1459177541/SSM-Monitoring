@@ -7,21 +7,21 @@ import java.util.List;
 
 public interface FileService {
 
-    List<String> getRootPath();
+    public List<String> getRootPath();
 
-    List<FileInfo> getFileList(String url);
+    public List<FileInfo> getFileList(String url);
 
-    String upload(List<FileItem> attr);
+    public String upload(List<FileItem> attr);
 
-    boolean delete(String url);
+    public boolean delete(String url);
 
-    boolean reName(String url, String name);
+    public boolean reName(String url, String name);
 
-    boolean mkdir(String url, String name);
+    public boolean mkdir(String url, String name);
 
-    boolean watch(String url);
+    public boolean watch(String url);
 
-    boolean addWatch(String url);
+    public boolean addWatch(String url);
 
-    boolean removeWatch(String url);
+    public boolean removeWatch(String url);
 }

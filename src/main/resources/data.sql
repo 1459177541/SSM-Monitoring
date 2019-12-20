@@ -14,6 +14,7 @@ VALUES
        (1, 'net'),
        (1, 'disk'),
        (1, 'file'),
+       (1, 'desktop'),
        (1, 'user'),
        (2, 'index'),
        (2, 'user');

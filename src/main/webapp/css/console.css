@@ -213,3 +213,7 @@ li{
 .select_file .file_image {
     background: burlywood;
 }
+#desktop_img {
+    height: 100%;
+    object-fit: cover;
+}
