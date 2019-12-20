@@ -220,6 +220,19 @@ var file = function () {
                 });
             }
         );
+        $('#file_download_' + id).click(function () {
+            var file = opened_file[id].child[select[id].id.split('_')[2]];
+            var form = $('<form></form>')
+                .attr('action', 'console/file_download/'+encodeURI(file.name))
+                .attr('method', 'post');
+            form.append(
+                $('<input/>')
+                    .attr('name', 'url')
+                    .attr('value', encodeURI(file.url))
+                    .attr('type', 'hidden')
+            );
+            form.appendTo('body').submit().remove();
+        });
         $('#file_open_dir_new_' + id).click(function () {
             addPath(opened_file[id].child[select[id].id.split('_')[2]].url);
         });

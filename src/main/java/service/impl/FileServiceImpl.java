@@ -7,16 +7,12 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import service.FileService;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.file.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -153,6 +149,16 @@ public class FileServiceImpl implements FileService {
             }
         }
         return true;
+    }
+
+    @Override
+    public int transfer(String url, OutputStream outputStream) {
+        try(FileInputStream fileInputStream = new FileInputStream(url)) {
+            fileInputStream.transferTo(outputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return Math.toIntExact(new File(url).length());
     }
 
 }

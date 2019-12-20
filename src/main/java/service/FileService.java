@@ -3,6 +3,7 @@ package service;
 import controller.vo.FileInfo;
 import org.apache.commons.fileupload.FileItem;
 
+import java.io.OutputStream;
 import java.util.List;
 
 public interface FileService {
@@ -24,4 +25,7 @@ public interface FileService {
     public boolean addWatch(String url);
 
     public boolean removeWatch(String url);
+
+    public int transfer(String url, OutputStream outputStream);
+
 }

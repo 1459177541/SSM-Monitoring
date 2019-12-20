@@ -12,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +107,13 @@ public class ConsoleController {
     public Response<String> fileUpload(HttpServletRequest request) throws FileUploadException {
         List<FileItem> attr = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
         return Response.create(() -> fileService.upload(attr));
+    }
+
+    @PostMapping("file_download/{fileName}")
+    public void fileDownload(HttpServletResponse response,
+                             @RequestParam("url") String url,
+                             @PathVariable String fileName) throws IOException {
+        fileService.transfer(URLDecoder.decode(url, StandardCharsets.UTF_8), response.getOutputStream());
     }
 
     @PostMapping("file_delete")
