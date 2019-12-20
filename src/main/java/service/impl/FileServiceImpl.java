@@ -10,17 +10,26 @@ import org.springframework.stereotype.Service;
 import service.FileService;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+
+import static java.nio.file.StandardWatchEventKinds.*;
 
 @Service
 public class FileServiceImpl implements FileService {
 
     private final Sigar sigar;
     private static final String SEPARATOR = System.getProperty("file.separator");
+    private final Map<Path, WatchService> watchServiceMap = new ConcurrentHashMap<>();
+    private final Map<Path, AtomicInteger> pathCount = new ConcurrentHashMap<>();
 
     @Autowired
     public FileServiceImpl(Sigar sigar) {
@@ -87,6 +96,63 @@ public class FileServiceImpl implements FileService {
     @Override
     public boolean mkdir(String url, String name) {
         return new File(url + SEPARATOR + name).mkdir();
+    }
+
+    @Override
+    public boolean watch(String url) {
+        Path path =Paths.get(url);
+        if (watchServiceMap.containsKey(path)) {
+            WatchKey watchKey = watchServiceMap.get(path).poll();
+            if (watchKey == null) {
+                return false;
+            }
+            watchKey.pollEvents();
+            watchKey.reset();
+            return true;
+        }
+        throw new RuntimeException("未添加的监听");
+    }
+
+    @Override
+    public boolean addWatch(String url) {
+        Path path = Paths.get(url);
+        try {
+            WatchService watchService = FileSystems.getDefault().newWatchService();
+            path.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+            watchServiceMap.put(path, watchService);
+            pathCount.compute(path, ((path1, atomicInteger) -> {
+                if (atomicInteger != null) {
+                    atomicInteger.addAndGet(1);
+                    return atomicInteger;
+                } else {
+                    return new AtomicInteger(1);
+                }
+            }));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return watch(url);
+    }
+
+    @Override
+    public boolean removeWatch(String url) {
+        Path path = Paths.get(url);
+        if (watchServiceMap.containsKey(path)) {
+            AtomicInteger count = pathCount.get(path);
+            count.addAndGet(-1);
+            if (count.get() > 0) {
+                return true;
+            }
+            pathCount.remove(path);
+            try {
+                watchServiceMap.get(path).close();
+                watchServiceMap.remove(path);
+                return true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
     }
 
 }

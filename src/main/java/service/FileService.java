@@ -19,4 +19,9 @@ public interface FileService {
 
     boolean mkdir(String url, String name);
 
+    boolean watch(String url);
+
+    boolean addWatch(String url);
+
+    boolean removeWatch(String url);
 }

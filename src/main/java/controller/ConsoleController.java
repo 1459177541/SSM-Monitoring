@@ -114,4 +114,18 @@ public class ConsoleController {
         return Response.create(() -> fileService.mkdir(url, name));
     }
 
+    @PostMapping("file_watch")
+    public Response<Boolean> fileWatch(@RequestParam("url") String url) {
+        return Response.create(() -> fileService.watch(url));
+    }
+
+    @PostMapping("file_add_watch")
+    public Response<Boolean> fileAddWatch(@RequestParam("url") String url) {
+        return Response.create(() -> fileService.addWatch(url));
+    }
+
+    @PostMapping("file_remove_watch")
+    public Response<Boolean> fileRemoveWatch(@RequestParam("url") String url) {
+        return Response.create(() -> fileService.removeWatch(url));
+    }
 }

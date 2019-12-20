@@ -104,6 +104,18 @@ var file = function () {
         });
 
     };
+    var watch_list = {};
+    var remove_watch = function (url) {
+        watch_list[url]--;
+        $.ajax({
+            url:'console/file_remove_watch',
+            type:'POST',
+            data:{url:url},
+            success: function (data) {
+                console.log(data.data);
+            }
+        })
+    };
     var addPath = function (url) {
         $('#loading').show();
         var id = open_id;
@@ -122,6 +134,7 @@ var file = function () {
             '<div id="file_open_dir_this_' + id + '" class="button">在本页面打开</div>' +
             '<div id="file_delete_' + id + '" class="button">删除</div>' +
             '<div id="file_rename_' + id + '" class="button">重命名</div>' +
+            '<div id="file_close_'+id+'" class="button">关闭</div>' +
             '</div>' +
             '<div id="file_main_' + id + '" class="file_main"></div>' +
             '</div>'
@@ -239,9 +252,53 @@ var file = function () {
                 }
             })
         });
+        $('#file_close_' + id).click(function () {
+            $('#loading').show();
+            fullpage_api.destroy('all');
+            remove_watch(url);
+            $('#file_' + id).remove();
+            $('#fullpage').fullpage({
+                anchors: anchors,
+                menu: '#menu'
+            });
+            setTimeout(function () {
+                $('#loading').hide();
+            }, 1000);
+        });
         $('#fullpage').fullpage({
             anchors: anchors,
             menu: '#menu'
+        });
+        var watch = function (id, url) {
+            $.ajax({
+                url: 'console/file_watch',
+                type: 'POST',
+                data: {url: url},
+                success: function (data) {
+                    if (data.data) {
+                        update_files(url, id);
+                    }
+                    setTimeout(function () {
+                        if (watch_list[url] > 0) {
+                            watch(id, url);
+                        }
+                    }, 1000);
+                }
+            });
+        };
+        $.ajax({
+            url: 'console/file_add_watch',
+            type: 'POST',
+            data: {url: url},
+            success: function (data) {
+                if (data.data) {
+                    update_files(url, id);
+                }
+                watch_list[url] = 1;
+                setTimeout(function () {
+                    watch(id, url);
+                }, 1000);
+            }
         });
         setTimeout(function () {
             $('#loading').hide();
@@ -251,4 +308,9 @@ var file = function () {
     $('#path_button').click(function () {
         addPath($('#path_input').val());
     });
+    window.onbeforeunload = function () {
+        opened_file.forEach(function (value) {
+            remove_watch(value.url);
+        });
+    }
 };
