@@ -2,7 +2,7 @@
 var anchors=[];
 var file = function () {
     $('#path_input').click(function () {
-        if ($('#path_input').val()==='') {
+        if ($('#path_input').val() === '') {
             $('#path').empty();
             $.ajax({
                 url: '/console/root_path',
@@ -15,11 +15,11 @@ var file = function () {
             });
         }
     });
-    var opened_file=[];
-    var open_id=0;
-    var select = [];
-    var open_url_log = [];
-    var remove_select = function (id) {
+    const opened_file = [];
+    let open_id = 0;
+    const select = [];
+    const open_url_log = [];
+    const remove_select = function (id) {
         $('#file_open_dir_new_' + id).hide();
         $('#file_open_dir_this_' + id).hide();
         $('#file_download_' + id).hide();
@@ -27,12 +27,11 @@ var file = function () {
         $('#file_rename_' + id).hide();
         $(select[id]).removeClass('select_file');
         select[id] = undefined;
-
     };
-    var update_files = function (url, id) {
-        $('#file_main_'+id).empty();
+    const update_files = function (url, id) {
+        $('#file_main_' + id).empty();
         remove_select(id);
-        var addOne = function (id, cid, element) {
+        const addOne = function (id, cid, element) {
             $('#file_main_' + id).append(
                 '<div id="file_' + id + '_' + cid + '" class="file_file">' +
                 '<div class="file_image">' +
@@ -41,6 +40,7 @@ var file = function () {
                 '</div>'
             );
             $('#file_' + id + '_' + cid).click(function () {
+                this.file_info = element;
                 if (select[id] && this.id === select[id].id) {
                     remove_select(id);
                     return;
@@ -68,8 +68,8 @@ var file = function () {
             data: {url: url},
             method: 'POST',
             success: function (data) {
-                var cid = 0;
-                var open = {url: url, child: []};
+                let cid = 0;
+                const open = {url: url, child: []};
                 data.data.forEach(function (element) {
                     open.child[cid] = element;
                     addOne(id, cid, element);
@@ -77,16 +77,16 @@ var file = function () {
                 });
                 $('#file_main_' + id).append(
                     '<div id="file_uploading_' + id + '" class="file_file">' +
-                        '<div class="file_image">loading</div>' +
-                        '正在上传中' +
+                    '<div class="file_image">loading</div>' +
+                    '正在上传中' +
                     '</div>'
                 );
-                $('#file_uploading_'+id).hide();
+                $('#file_uploading_' + id).hide();
                 opened_file[id] = open;
             }
         });
     };
-    var add_dialog = function (id, name, input, f) {
+    const add_dialog = function (id, name, input, f) {
         $('#file_' + id).append(
             '<div id="file_' + name + '_div_' + id + '" class="file_' + name + ' file_dialog">' +
             input +
@@ -104,21 +104,21 @@ var file = function () {
         });
 
     };
-    var watch_list = {};
-    var remove_watch = function (url) {
+    const watch_list = {};
+    const remove_watch = function (url) {
         watch_list[url]--;
         $.ajax({
-            url:'console/file_remove_watch',
-            type:'POST',
-            data:{url:url},
+            url: 'console/file_remove_watch',
+            type: 'POST',
+            data: {url: url},
             success: function (data) {
                 console.log(data.data);
             }
         })
     };
-    var addPath = function (url) {
+    const addPath = function (url) {
         $('#loading').show();
-        var id = open_id;
+        const id = open_id;
         open_id++;
         open_url_log[id] = [];
         fullpage_api.destroy('all');
@@ -134,7 +134,7 @@ var file = function () {
             '<div id="file_open_dir_this_' + id + '" class="button">在本页面打开</div>' +
             '<div id="file_delete_' + id + '" class="button">删除</div>' +
             '<div id="file_rename_' + id + '" class="button">重命名</div>' +
-            '<div id="file_close_'+id+'" class="button">关闭</div>' +
+            '<div id="file_close_' + id + '" class="button">关闭</div>' +
             '</div>' +
             '<div id="file_main_' + id + '" class="file_main"></div>' +
             '</div>'
@@ -155,9 +155,9 @@ var file = function () {
             function () {
                 $('#file_uploading_' + id).show();
                 $('#file_upload_div_' + id).hide();
-                var formData = new FormData();
+                const formData = new FormData();
                 formData.append('url', opened_file[id].url);
-                for (var i = 0; i < $('#file_upload_file_' + id)[0].files.length; i++) {
+                for (let i = 0; i < $('#file_upload_file_' + id)[0].files.length; i++) {
                     formData.append('file', $('#file_upload_file_' + id)[0].files[i]);
                 }
                 $.ajax({
@@ -187,7 +187,7 @@ var file = function () {
                     url: 'console/file_rename',
                     type: 'POST',
                     data: {
-                        url: opened_file[id].child[select[id].id.split('_')[2]].url,
+                        url: select[id].file_info.url,
                         name: $('#file_rename_input_' + id).val()
                     },
                     success: function (data) {
@@ -221,32 +221,31 @@ var file = function () {
             }
         );
         $('#file_download_' + id).click(function () {
-            var file = opened_file[id].child[select[id].id.split('_')[2]];
-            var form = $('<form></form>')
-                .attr('action', 'console/file_download/'+encodeURI(file.name))
-                .attr('method', 'post');
-            form.append(
-                $('<input/>')
-                    .attr('name', 'url')
-                    .attr('value', encodeURI(file.url))
-                    .attr('type', 'hidden')
-            );
-            form.appendTo('body').submit().remove();
+            $('<form></form>')
+                .attr('action', 'console/file_download/' + encodeURI(select[id].file_info.name))
+                .attr('method', 'post')
+                .attr('target', '_blank')
+                .append(
+                    $('<input/>')
+                        .attr('name', 'url')
+                        .attr('value', encodeURI(select[id].file_info.url))
+                        .attr('type', 'hidden')
+                )
+                .appendTo('body').submit().remove();
         });
         $('#file_open_dir_new_' + id).click(function () {
-            addPath(opened_file[id].child[select[id].id.split('_')[2]].url);
+            addPath(select[id].file_info.url);
         });
         $('#file_open_dir_this_' + id).click(function () {
             open_url_log[id].push(url);
             $('#file_back_' + id).show();
-            var n_url = opened_file[id].child[select[id].id.split('_')[2]].url;
-            $('#file_title_' + id).text(n_url);
-            update_files(n_url, id);
-            url = n_url;
+            $('#file_title_' + id).text(select[id].file_info.url);
+            url = select[id].file_info.url;
+            update_files(select[id].file_info.url, id);
         });
         $('#file_back_' + id).click(function () {
-            var n_url = open_url_log[id].pop();
-            if (open_url_log[id].length === 0){
+            const n_url = open_url_log[id].pop();
+            if (open_url_log[id].length === 0) {
                 $('#file_back_' + id).hide();
             }
             $('#file_title_' + id).text(n_url);
@@ -257,7 +256,7 @@ var file = function () {
             $.ajax({
                 url: 'console/file_delete',
                 type: 'POST',
-                data: {url: opened_file[id].child[select[id].id.split('_')[2]].url},
+                data: {url: select[id].file_info.url},
                 success: function (data) {
                     if (data.data) {
                         update_files(url, id);
@@ -282,7 +281,7 @@ var file = function () {
             anchors: anchors,
             menu: '#menu'
         });
-        var watch = function (id, url) {
+        const watch = function (id, url) {
             $.ajax({
                 url: 'console/file_watch',
                 type: 'POST',
