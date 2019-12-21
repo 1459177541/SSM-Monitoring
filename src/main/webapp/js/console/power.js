@@ -70,7 +70,8 @@ var powerMap = {
     user: {
         menu: '<li data-menuanchor="user_anchor"><a href="#user_anchor">用户管理</a></li>',
         anchor: 'user_anchor',
-        doc: '<div id="user" class="section">USER</div>',
+        doc: '<div id="user" class="section"><div id="user_main"></div></div>',
+        method: user,
         order: 80
     }
 };

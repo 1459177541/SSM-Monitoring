@@ -1,6 +1,9 @@
 package service;
 
+import controller.vo.UserInfo;
 import model.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -9,5 +12,9 @@ public interface UserService {
     public User getUserInfo(long uid);
 
     public long register(User user);
+
+    public List<UserInfo> getUserInfoList();
+
+    public Boolean modifyPower(UserInfo userInfo);
 
 }

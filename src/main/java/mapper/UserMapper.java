@@ -17,10 +17,13 @@ public interface UserMapper {
             "WHERE id=#{id}"
     })
     @Results(
-            id="powerMap", value = {
-                    @Result(column = "id", property = "power",
-                            many = @Many(select = "mapper.PowerMapper.findPower",
-                                    fetchType = FetchType.EAGER))
+            id = "powerMap", value = {
+            @Result(id = true, column = "id", property = "id"),
+            @Result(column = "name", property = "name"),
+            @Result(column = "password", property = "password"),
+            @Result(column = "id", property = "power",
+                    many = @Many(select = "mapper.PowerMapper.findPower",
+                            fetchType = FetchType.EAGER))
     })
     public User findById(long id);
 
@@ -38,7 +41,7 @@ public interface UserMapper {
 
     @Select({
             "SELECT *",
-            "FROM user"
+            "FROM t_user"
     })
     @ResultMap({"powerMap"})
     public List<User> findAll();

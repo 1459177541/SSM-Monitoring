@@ -9,7 +9,7 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private String password;
-    private List<String> power;
+    private List<Power> power;
 
     public Long getId() {
         return id;
@@ -38,11 +38,11 @@ public class User implements Serializable {
         return this;
     }
 
-    public List<String> getPower() {
+    public List<Power> getPower() {
         return power;
     }
 
-    public User setPower(List<String> power) {
+    public User setPower(List<Power> power) {
         this.power = power;
         return this;
     }

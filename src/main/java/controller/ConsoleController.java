@@ -1,5 +1,6 @@
 package controller;
 
+import model.Power;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -12,13 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/console/")
@@ -31,6 +31,7 @@ public class ConsoleController {
     private final DiskService diskService;
     private final NetService netService;
     private final RemoteDesktopService desktopService;
+    private final UserService userService;
 
     @Autowired
     public ConsoleController(SignService signService,
@@ -39,7 +40,8 @@ public class ConsoleController {
                              FileService fileService,
                              DiskService diskService,
                              NetService netService,
-                             RemoteDesktopService desktopService) {
+                             RemoteDesktopService desktopService,
+                             UserService userService) {
         this.signService = signService;
         this.cpuService = cpuService;
         this.memService = memService;
@@ -47,6 +49,7 @@ public class ConsoleController {
         this.diskService = diskService;
         this.netService = netService;
         this.desktopService = desktopService;
+        this.userService = userService;
     }
 
     @GetMapping("power")
@@ -55,7 +58,13 @@ public class ConsoleController {
             List<String> data = new ArrayList<>();
             return Response.fail(data).setMessage("未登录");
         }
-        return Response.success(signService.getUser(uuid).getPower());
+        return Response.success(
+                signService
+                        .getUser(uuid)
+                        .getPower()
+                        .stream()
+                        .map(Power::name)
+                        .collect(Collectors.toList()));
     }
 
     @GetMapping("cpu_info")
@@ -149,5 +158,15 @@ public class ConsoleController {
     @GetMapping("desktop")
     public void desktop(HttpServletResponse response) throws IOException {
         ImageIO.write(desktopService.screenshots(), "jpeg", response.getOutputStream());
+    }
+
+    @GetMapping("user_list")
+    public Response<List<UserInfo>> userList() {
+        return Response.create(userService::getUserInfoList);
+    }
+
+    @PostMapping("user_modify_power")
+    public Response<Boolean> modifyPower(UserInfo userInfo) {
+        return Response.create(() -> userService.modifyPower(userInfo));
     }
 }

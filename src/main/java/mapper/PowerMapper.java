@@ -1,9 +1,7 @@
 package mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import model.Power;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,11 +15,17 @@ public interface PowerMapper {
             "FROM t_power",
             "WHERE uid=#{id}"
     })
-    public List<String> findPower(long id);
+    public List<Power> findPower(long id);
 
     @Insert({
             "INSERT INTO t_power",
             "VALUES (#{id}, #{power})"
     })
-    public int addPower(@Param("id") long id, @Param("power") String power);
+    public int addPower(@Param("id") long id, @Param("power") Power power);
+
+    @Delete({
+            "DELETE FROM t_power",
+            "WHERE uid=#{id} AND name=#{power}"
+    })
+    public int deletePower(@Param("id") long id, @Param("power") Power power);
 }
