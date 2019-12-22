@@ -53,4 +53,10 @@ public interface UserMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public int save(User user);
 
+    @Update({
+            "UPDATE t_user",
+            "SET password=#{password}",
+            "WHERE id=#{id}"
+    })
+    public int setPassword(@Param("id") long id, @Param("password") String password);
 }

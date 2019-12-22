@@ -69,6 +69,7 @@ var cpu = function(){
             $.ajax({
                 url: '/console/cpu_status',
                 method: 'GET',
+                cache: false,
                 success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data.time);

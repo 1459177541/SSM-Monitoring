@@ -17,4 +17,5 @@ public interface UserService {
 
     public Boolean modifyPower(UserInfo userInfo);
 
+    public Boolean resetPassword(long id, String password);
 }

@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public Boolean resetPassword(long id, String password) {
+        return userMapper.setPassword(id, password) == 1;
+    }
+
 }

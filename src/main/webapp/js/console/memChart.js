@@ -70,6 +70,7 @@ var mem = function(){
             $.ajax({
                 url: '/console/mem_status',
                 method: 'GET',
+                cache: false,
                 success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data.time);

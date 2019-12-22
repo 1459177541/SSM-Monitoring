@@ -110,6 +110,7 @@ var file = function () {
         $.ajax({
             url: 'console/file_remove_watch',
             type: 'POST',
+            cache: false,
             data: {url: url},
             success: function (data) {
                 console.log(data.data);
@@ -186,6 +187,7 @@ var file = function () {
                 $.ajax({
                     url: 'console/file_rename',
                     type: 'POST',
+                    cache: false,
                     data: {
                         url: select[id].file_info.url,
                         name: $('#file_rename_input_' + id).val()
@@ -207,6 +209,7 @@ var file = function () {
                 $.ajax({
                     url: 'console/file_mkdir',
                     type: 'POST',
+                    cache: false,
                     data: {
                         url: url,
                         name: $('#file_mkdir_input_' + id).val()
@@ -256,6 +259,7 @@ var file = function () {
             $.ajax({
                 url: 'console/file_delete',
                 type: 'POST',
+                cache: false,
                 data: {url: select[id].file_info.url},
                 success: function (data) {
                     if (data.data) {
@@ -285,6 +289,7 @@ var file = function () {
             $.ajax({
                 url: 'console/file_watch',
                 type: 'POST',
+                cache: false,
                 data: {url: url},
                 success: function (data) {
                     if (data.data) {
@@ -301,6 +306,7 @@ var file = function () {
         $.ajax({
             url: 'console/file_add_watch',
             type: 'POST',
+            cache: false,
             data: {url: url},
             success: function (data) {
                 if (data.data) {

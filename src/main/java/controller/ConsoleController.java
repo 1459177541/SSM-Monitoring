@@ -169,4 +169,9 @@ public class ConsoleController {
     public Response<Boolean> modifyPower(UserInfo userInfo) {
         return Response.create(() -> userService.modifyPower(userInfo));
     }
+
+    @PostMapping("user_reset_password")
+    public Response<Boolean> resetPassword(@RequestParam("id") long id, @RequestParam("password") String password) {
+        return Response.create(() -> userService.resetPassword(id, password));
+    }
 }

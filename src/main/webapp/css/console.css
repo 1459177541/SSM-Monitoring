@@ -218,7 +218,7 @@ li{
     object-fit: cover;
 }
 #user_main {
-    width: 800px;
+    width: 1200px;
     margin: 0 auto;
     position: relative;
     top: 10%;
@@ -226,10 +226,29 @@ li{
 }
 #user_title {
     font-size: 70px;
+    width: 100%;
+}
+#user_list_main {
+    width: 1200px;
+    height: 80%;
+}
+#user_list_left {
+    width: 980px;
+    display: inline-block;
+    float: left;
+    height: 100%;
+}
+#user_op {
+    display: inline-block;
+    float: right;
+    width: 210px;
+    padding-top: 25px;
+    height: 100%;
 }
 #user_op .button {
-    margin: 15px;
+    margin: 5px;
     display: inline-block;
+    width: 135px;
 }
 #user_op .unable {
     background: #EEEEEE;
@@ -237,36 +256,42 @@ li{
 }
 #user_list {
     border: 1px white solid;
-    height: 70%;
+    height: 95%;
     font-size: 25px;
     overflow: auto;
+    width: 980px;
 }
 #user_info_title {
     font-size: 20px;
-}
-#user_info_title div {
-    display: inline-block;
-    width: 80px;
+    width: 97%;
 }
 .user_info {
     background: #FFFFFF22;
     cursor: default;
+    padding-right: 3%;
+    height: 35px;
 }
 .user_info:hover {
     background: #00000022;
     border-bottom: 1px aquamarine solid;
     border-top: 1px aquamarine solid;
 }
+.user_info_name {
+    display: inline-block;
+    width: 270px;
+    float: left;
+}
+.user_info_id,.user_info_power {
+    display: inline-block;
+    width: 85px;
+    float: left;
+}
 #user_list .select {
     background: #00000022;
     border-bottom: 1px aquamarine solid;
     border-top: 1px aquamarine solid;
 }
-.user_info div {
-    display: inline-block;
-    width: 80px;
-}
-#user_div {
+#user_div, #user_reset_password_div, #user_add_user_div {
     position: relative;
     top: -500px;
     background: #72D1E9;
@@ -278,6 +303,9 @@ li{
     border: 2px white solid;
     overflow: hidden;
     font-size: 20px;
+}
+#user_add_user_div .input {
+    margin: 25px auto;
 }
 #user_div div {
     display: inline-block;

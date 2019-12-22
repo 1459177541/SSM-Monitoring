@@ -84,6 +84,7 @@ var net = function(){
             $.ajax({
                 url: '/console/net_status',
                 method: 'GET',
+                cache: false,
                 success: function (data) {
                     xAxisData.shift();
                     var date = new Date(data.data[0].time);
