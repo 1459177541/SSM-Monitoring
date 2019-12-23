@@ -10,23 +10,23 @@ $(document).ready(function(){
         } else if($("#pwd").val()!==$("#pwd2").val()){
             $("#err").text('两次输入密码不匹配');
         } else {
-            $.post(
-                "sign_up",
-                {
-                    id:$("#uid").val(),
-                    name:$('#name').val(),
-                    password:$("#pwd").val()
+            $.ajax({
+                url: "sign_up",
+                type: 'POST',
+                data: {
+                    name: $('#name').val(),
+                    password: $("#pwd").val()
                 },
-                function(result){
-                    if(result.success){
+                success: function (result) {
+                    if (result.success) {
                         // window.location.href = result.data;
-                        $('#message').text("您的ID为："+result.data);
+                        $('#message').text("您的ID为：" + result.data);
                         $("#dialog").show();
-                    }else{
+                    } else {
                         $('#err').text(result.data);
                     }
                 }
-            )
+            });
         }
     })
 });

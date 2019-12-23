@@ -5,7 +5,7 @@ var file = function () {
         if ($('#path_input').val() === '') {
             $('#path').empty();
             $.ajax({
-                url: '/console/root_path',
+                url: '/console/file_root_path',
                 method: 'GET',
                 success: function (data) {
                     data.data.forEach(function (element) {

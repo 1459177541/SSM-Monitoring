@@ -102,7 +102,7 @@ public class ConsoleController {
         return Response.create(diskService::getDiskInfo);
     }
 
-    @GetMapping("root_path")
+    @GetMapping("file_root_path")
     public Response<List<String>> rootPath() {
         return Response.create(fileService::getRootPath);
     }

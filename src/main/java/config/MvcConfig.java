@@ -1,6 +1,6 @@
 package config;
 
-import controller.inteceptor.UserInterceptor;
+import controller.interceptor.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

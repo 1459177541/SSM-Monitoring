@@ -1,21 +1,20 @@
 // JavaScript Document
 $(document).ready(function(){
     $('#sign_in_button').click(function(){
-        $.post(
-            "/sign_in",
-            {
-                id:$("#uid").val(), 
-                password:$("#pwd").val()
+        $.ajax({
+            url: "/sign_in",
+            type: 'POST',
+            data: {
+                id: $("#uid").val(),
+                password: $("#pwd").val()
             },
-            function(result, status){
-                if(result.success){
-                    $('#err').text(result.message);
+            success: function (result) {
+                if (result.success) {
                     window.location.href = result.data;
-                }else{
+                } else {
                     $('#err').text(result.data);
                 }
-            },
-            'json'
-        )
+            }
+        });
     })
 });
