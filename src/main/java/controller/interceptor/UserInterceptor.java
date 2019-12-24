@@ -25,16 +25,22 @@ public class UserInterceptor implements HandlerInterceptor {
         this.signService = signService;
     }
 
-    @SuppressWarnings("AlibabaUndefineMagicConstant")
+    private boolean checkIp(String ip) {
+        return ip == null
+                || ip.length() == 0
+                || "unknown".equalsIgnoreCase(ip)
+                || "null".equalsIgnoreCase(ip);
+    }
+
     private String getIRealIPAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip) || "null".equalsIgnoreCase(ip))    {
+        if (checkIp(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)   || "null".equalsIgnoreCase(ip)) {
+        if (checkIp(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)    || "null".equalsIgnoreCase(ip)) {
+        if (checkIp(ip)) {
             ip = request.getRemoteAddr();
         }
         return ip;
@@ -72,14 +78,24 @@ public class UserInterceptor implements HandlerInterceptor {
                 && !"/console/file_watch".equals(request.getRequestURI());
         log = log || request.getRequestURI().contains(Power.user.name);
         if (log) {
-            logger.info("允许ID(" + user.getId() + ")" +
-                    "访问[" + request.getRequestURI() + "]" +
-                    "参数[" + request.getParameterMap()
-                    .entrySet()
-                    .stream()
-                    .map(stringEntry -> stringEntry.getKey() + ":" + Arrays.toString(stringEntry.getValue()))
-                    .reduce(" ", String::concat) +
-                    "]");
+            logger.info(String.format("允许ID[%03d] 访问[%-30s] 参数{%s}",
+                    user.getId(),
+                    request.getRequestURI(),
+                    request.getParameterMap()
+                            .entrySet()
+                            .stream()
+                            .reduce(new StringBuilder(),
+                                    (builder, entry) -> builder
+                                            .append(", ")
+                                            .append(entry.getKey())
+                                            .append(':')
+                                            .append(Arrays.toString(entry.getValue())),
+                                    (builder1, builder2) -> {
+                                        throw new RuntimeException(builder1.toString() + ", " + builder2.toString());
+                                    })
+                            .delete(0, 2)
+                            .toString()
+            ));
         }
         return true;
     }
