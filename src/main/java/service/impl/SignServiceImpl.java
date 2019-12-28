@@ -1,13 +1,18 @@
 package service.impl;
 
+import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.SignService;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,11 +20,29 @@ import java.util.stream.Collectors;
 public class SignServiceImpl implements SignService {
 
     private Map<UUID, User> userMap = new ConcurrentHashMap<>();
-    private final UserServiceImpl userService;
+    private Map<UUID, Date> updateMap = new ConcurrentHashMap<>();
+    private final UserMapper userMapper;
 
     @Autowired
-    public SignServiceImpl(UserServiceImpl userService) {
-        this.userService = userService;
+    public SignServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+        Executors
+                .newSingleThreadScheduledExecutor()
+                .scheduleAtFixedRate(this::scheduled, 0, 10, TimeUnit.MINUTES);
+    }
+
+    private void scheduled() {
+        long now = System.currentTimeMillis() - 30 * 60 * 1000;
+        updateMap
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getTime() < now)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet())
+                .forEach(uuid -> {
+                    updateMap.remove(uuid);
+                    userMap.remove(uuid);
+                });
     }
 
     @Override
@@ -29,12 +52,20 @@ public class SignServiceImpl implements SignService {
         }
         UUID uuid = UUID.randomUUID();
         userMap.put(uuid, user);
+        updateMap.put(uuid, new Date());
         return uuid;
     }
 
     @Override
     public User getUser(UUID uuid) {
-        return uuid == null ? null : userMap.get(uuid);
+        User user = uuid == null ? null : userMap.get(uuid);
+        if (user != null) {
+            updateMap.computeIfPresent(uuid, (uuid1, date) -> {
+                date.setTime(System.currentTimeMillis());
+                return date;
+            });
+        }
+        return user;
     }
 
     @Override
@@ -46,6 +77,7 @@ public class SignServiceImpl implements SignService {
     public void remove(UUID uuid) {
         if (uuid != null) {
             userMap.remove(uuid);
+            updateMap.remove(uuid);
         }
     }
 
@@ -73,7 +105,7 @@ public class SignServiceImpl implements SignService {
                 .stream()
                 .collect(Collectors
                         .toMap(Function.identity(),
-                                uuid -> userService.getUserInfo(userMap.get(uuid).getId()),
+                                uuid -> userMapper.findById(userMap.get(uuid).getId()),
                                 (a,b)-> a,
                                 ConcurrentHashMap::new));
     }

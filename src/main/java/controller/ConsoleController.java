@@ -167,7 +167,13 @@ public class ConsoleController {
 
     @PostMapping("user_modify_power")
     public Response<Boolean> modifyPower(UserInfo userInfo) {
-        return Response.create(() -> userService.modifyPower(userInfo));
+        return Response.create(() -> {
+            boolean success = userService.modifyPower(userInfo);
+            if (success) {
+                signService.reload();
+            }
+            return success;
+        });
     }
 
     @PostMapping("user_reset_password")
